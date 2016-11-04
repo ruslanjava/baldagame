@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="24">
+
+        <TextView
+            style="@style/KeyboardLetterView"
+            android:layout_weight="2"
+            android:text="Й" />
+
+        <TextView
+            style="@style/KeyboardLetterView"
+            android:layout_weight="2"
+            android:text="Ц" />
+
+        <TextView
+            style="@style/KeyboardLetterView"
+            android:layout_weight="2"
+            android:text="У" />
+
+        <TextView
+            style="@style/KeyboardLetterView"
+            android:layout_weight="2"
+            android:text="К" />
+
+        <TextView
+            style="@style/KeyboardLetterView"
+            android:layout_weight="2"
+            android:text="Е" />
+
+        <TextView
+            style="@style/KeyboardLetterView"
+            android:layout_weight="2"
+            android:text="Н" />
+
+        <TextView
+            style="@style/KeyboardLetterView"
+            android:layout_weight="2"
+            android:text="Г" />
+
+        <TextView
+            style="@style/KeyboardLetterView"
+            android:layout_weight="2"
+            android:text="Ш" />
+
+        <TextView
+            style="@style/KeyboardLetterView"
+            android:layout_weight="2"
+            android:text="Щ" />
+
+        <TextView
+            style="@style/KeyboardLetterView"
+            android:layout_weight="2"
+            android:text="З" />
+
+        <TextView
+            style="@style/KeyboardLetterView"
+            android:layout_weight="2"
+            android:text="Х" />
+
+        <TextView
+            style="@style/KeyboardLetterView"
+            android:layout_weight="2"
+            android:text="Ъ" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="24">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text=" " />
+
+        <TextView
+            style="@style/KeyboardLetterView"
+            android:layout_weight="2"
+            android:text="Ф" />
+
+        <TextView
+            style="@style/KeyboardLetterView"
+            android:layout_weight="2"
+            android:text="Ы" />
+
+        <TextView
+            style="@style/KeyboardLetterView"
+            android:layout_weight="2"
+            android:text="В" />
+
+        <TextView
+            style="@style/KeyboardLetterView"
+            android:layout_weight="2"
+            android:text="А" />
+
+        <TextView
+            style="@style/KeyboardLetterView"
+            android:layout_weight="2"
+            android:text="П" />
+
+        <TextView
+            style="@style/KeyboardLetterView"
+            android:layout_weight="2"
+            android:text="Р" />
+
+        <TextView
+            style="@style/KeyboardLetterView"
+            android:layout_weight="2"
+            android:text="О" />
+
+        <TextView
+            style="@style/KeyboardLetterView"
+            android:layout_weight="2"
+            android:text="Л" />
+
+        <TextView
+            style="@style/KeyboardLetterView"
+            android:layout_weight="2"
+            android:text="Д" />
+
+        <TextView
+            style="@style/KeyboardLetterView"
+            android:layout_weight="2"
+            android:text="Ж" />
+
+        <TextView
+            style="@style/KeyboardLetterView"
+            android:layout_weight="2"
+            android:text="Э" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text=" " />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="24">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text=" " />
+
+        <TextView
+            style="@style/KeyboardLetterView"
+            android:layout_weight="2"
+            android:text="Я" />
+
+        <TextView
+            style="@style/KeyboardLetterView"
+            android:layout_weight="2"
+            android:text="Ч" />
+
+        <TextView
+            style="@style/KeyboardLetterView"
+            android:layout_weight="2"
+            android:text="С" />
+
+        <TextView
+            style="@style/KeyboardLetterView"
+            android:layout_weight="2"
+            android:text="М" />
+
+        <TextView
+            style="@style/KeyboardLetterView"
+            android:layout_weight="2"
+            android:text="И" />
+
+        <TextView
+            style="@style/KeyboardLetterView"
+            android:layout_weight="2"
+            android:text="Т" />
+
+        <TextView
+            style="@style/KeyboardLetterView"
+            android:layout_weight="2"
+            android:text="Ь" />
+
+        <TextView
+            style="@style/KeyboardLetterView"
+            android:layout_weight="2"
+            android:text="Б" />
+
+        <TextView
+            style="@style/KeyboardLetterView"
+            android:layout_weight="2"
+            android:text="Ю" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text=" " />
+    </LinearLayout>
+</LinearLayout>

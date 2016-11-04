@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="20">
+
+        <TextView
+            style="@style/KeyboardLetterView"
+            android:layout_weight="2"
+            android:text="Q" />
+
+        <TextView
+            style="@style/KeyboardLetterView"
+            android:layout_weight="2"
+            android:text="W" />
+
+        <TextView
+            style="@style/KeyboardLetterView"
+            android:layout_weight="2"
+            android:text="E" />
+
+        <TextView
+            style="@style/KeyboardLetterView"
+            android:layout_weight="2"
+            android:text="R" />
+
+        <TextView
+            style="@style/KeyboardLetterView"
+            android:layout_weight="2"
+            android:text="T" />
+
+        <TextView
+            style="@style/KeyboardLetterView"
+            android:layout_weight="2"
+            android:text="Y" />
+
+        <TextView
+            style="@style/KeyboardLetterView"
+            android:layout_weight="2"
+            android:text="U" />
+
+        <TextView
+            style="@style/KeyboardLetterView"
+            android:layout_weight="2"
+            android:text="I" />
+
+        <TextView
+            style="@style/KeyboardLetterView"
+            android:layout_weight="2"
+            android:text="O" />
+
+        <TextView
+            style="@style/KeyboardLetterView"
+            android:layout_weight="2"
+            android:text="P" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="20">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text=" " />
+
+        <TextView
+            style="@style/KeyboardLetterView"
+            android:layout_weight="2"
+            android:text="A" />
+
+        <TextView
+            style="@style/KeyboardLetterView"
+            android:layout_weight="2"
+            android:text="S" />
+
+        <TextView
+            style="@style/KeyboardLetterView"
+            android:layout_weight="2"
+            android:text="D" />
+
+        <TextView
+            style="@style/KeyboardLetterView"
+            android:layout_weight="2"
+            android:text="F" />
+
+        <TextView
+            style="@style/KeyboardLetterView"
+            android:layout_weight="2"
+            android:text="G" />
+
+        <TextView
+            style="@style/KeyboardLetterView"
+            android:layout_weight="2"
+            android:text="H" />
+
+        <TextView
+            style="@style/KeyboardLetterView"
+            android:layout_weight="2"
+            android:text="J" />
+
+        <TextView
+            style="@style/KeyboardLetterView"
+            android:layout_weight="2"
+            android:text="K" />
+
+        <TextView
+            style="@style/KeyboardLetterView"
+            android:layout_weight="2"
+            android:text="L" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text=" " />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="22">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text=" " />
+
+        <TextView
+            style="@style/KeyboardLetterView"
+            android:layout_weight="2"
+            android:text="Z" />
+
+        <TextView
+            style="@style/KeyboardLetterView"
+            android:layout_weight="2"
+            android:text="X" />
+
+        <TextView
+            style="@style/KeyboardLetterView"
+            android:layout_weight="2"
+            android:text="C" />
+
+        <TextView
+            style="@style/KeyboardLetterView"
+            android:layout_weight="2"
+            android:text="V" />
+
+        <TextView
+            style="@style/KeyboardLetterView"
+            android:layout_weight="2"
+            android:text="B" />
+
+        <TextView
+            style="@style/KeyboardLetterView"
+            android:layout_weight="2"
+            android:text="N" />
+
+        <TextView
+            style="@style/KeyboardLetterView"
+            android:layout_weight="2"
+            android:text="M" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text=" " />
+    </LinearLayout>
+</LinearLayout>
+

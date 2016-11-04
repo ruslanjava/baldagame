@@ -1,0 +1,35 @@
+apply plugin: 'com.android.application'
+
+ext {
+    icePickVersion = '3.2.0'
+}
+
+android {
+    compileSdkVersion 24
+    buildToolsVersion "24.0.2"
+
+    defaultConfig {
+        applicationId "ru.vanillaflowers.baldagame"
+        minSdkVersion 21
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    compile 'com.android.support:percent:24.2.1'
+    compile 'com.android.support:appcompat-v7:24.2.1'
+    compile 'com.jakewharton:butterknife:8.4.0'
+    compile "frankiesardo:icepick:${icePickVersion}"
+    provided "frankiesardo:icepick-processor:${icePickVersion}"
+
+    testCompile 'junit:junit:4.12'
+}

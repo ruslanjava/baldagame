@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="normalCellBackgroundTop">#999999</color>
+    <color name="normalCellBackgroundBottom">#222222</color>
+    <color name="newCellBackgroundTop">#999999</color>
+    <color name="newCellBackgroundBottom">#222222</color>
+    <color name="selectedCellBackgroundTop">#999999</color>
+    <color name="selectedCellBackgroundBottom">#222222</color>
+
+    <color name="normalCellTextTop">#555555</color>
+    <color name="normalCellTextBottom">#222222</color>
+    <color name="newCellTextTop">#F6A9Cb</color>
+    <color name="newCellTextBottom">#96395b</color>
+    <color name="selectedCellTextTop">#A9CbF6</color>
+    <color name="selectedCellTextBottom">#395b96</color>
+
+    <color name="letterShadow">#22000000</color>
+</resources>
