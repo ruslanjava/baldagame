@@ -3,6 +3,8 @@ package com.github.ruslanjava.baldagame.prefixTree;
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Префиксное дерево, использующее RandomAccessFile для чтения отдельных узлов.
@@ -27,8 +29,10 @@ public final class FilePrefixTree {
         return root;
     }
 
-    public void printNodes() {
-        printNodes(root);
+    public List<String> getFiveLetterWords() {
+        List<String> result = new ArrayList<>();
+        addFiveLetterWords(result, root, 0);
+        return result;
     }
 
     public void close() {
@@ -39,14 +43,16 @@ public final class FilePrefixTree {
         }
     }
 
-    private void printNodes(FilePrefixTreeNode node) {
-        if (node.hasValue()) {
-            System.out.println(node.toString());
+    private void addFiveLetterWords(List<String> result, FilePrefixTreeNode node, int level) {
+        if (level < 4) {
+            char[] letters = node.getChildLetters();
+            for (char letter : letters) {
+                FilePrefixTreeNode child = node.getChild(letter);
+                addFiveLetterWords(result, child, level + 1);
+            }
         }
-        char[] letters = node.getChildLetters();
-        for (char letter : letters) {
-            FilePrefixTreeNode child = node.getChild(letter);
-            printNodes(child);
+        if (node.hasValue()) {
+            result.add(node.toString());
         }
     }
 
