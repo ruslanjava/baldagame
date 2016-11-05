@@ -24,11 +24,12 @@ public final class MemoryPrefixTree {
     }
 
     public void write(DataOutputStream dos) throws IOException {
-        calculateNodeOffsets(0);
+        calculateNodeOffsets();
         writeNodes(dos);
     }
     
-    private int calculateNodeOffsets(int offset) {
+    private int calculateNodeOffsets() {
+        int offset = 0;
         List<MemoryPrefixTreeNode> oldChildren = new ArrayList<>();
         oldChildren.add(root);
         List<MemoryPrefixTreeNode> newChildren = new ArrayList<>();

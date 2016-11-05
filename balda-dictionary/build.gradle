@@ -1,0 +1,17 @@
+apply plugin: 'java'
+
+test {
+    useTestNG()
+
+    testLogging.showStandardStreams = true
+}
+
+dependencies {
+
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    testCompile 'org.testng:testng:6.9.9'
+    testCompile 'org.hamcrest:hamcrest-core:1.3'
+    testCompile 'org.hamcrest:hamcrest-library:1.3'
+
+}

@@ -135,13 +135,10 @@ final class MemoryPrefixTreeNode {
     }
     
     void write(DataOutputStream dos) throws IOException {
-        
-        int parentOffset = parent != null ? parent.offset : -1;
-        
-        if (parentOffset != -1) {
-            dos.writeInt(parentOffset);
+        if (parent != null) {
+            dos.writeInt(parent.offset);
         } else {
-            dos.writeInt(0);
+            dos.writeInt(-1);
         }
         
         dos.writeChar(letter);
