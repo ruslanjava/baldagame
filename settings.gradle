@@ -1,1 +1,2 @@
+include ':balda-dictionary-generator'
 include ':balda-application'
