@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
 
 ext {
     icePickVersion = '3.2.0'
@@ -9,7 +10,7 @@ android {
     buildToolsVersion "24.0.2"
 
     defaultConfig {
-        applicationId "ru.vanillaflowers.baldagame"
+        applicationId "com.github.ruslanjava.baldagame"
         minSdkVersion 21
         targetSdkVersion 23
         versionCode 1
@@ -25,11 +26,22 @@ android {
 }
 
 dependencies {
+
+    compile project(':balda-game-solver')
+
     compile 'com.android.support:percent:24.2.1'
     compile 'com.android.support:appcompat-v7:24.2.1'
+    compile 'com.android.support:design:24.2.1'
+
     compile 'com.jakewharton:butterknife:8.4.0'
+    apt 'com.jakewharton:butterknife-compiler:8.4.0'
+
+    compile 'io.reactivex:rxandroid:1.2.1'
+    compile 'io.reactivex:rxjava:1.1.6'
+
     compile "frankiesardo:icepick:${icePickVersion}"
     provided "frankiesardo:icepick-processor:${icePickVersion}"
 
     testCompile 'junit:junit:4.12'
+
 }

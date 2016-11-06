@@ -18,9 +18,9 @@ import icepick.State;
 import com.github.ruslanjava.baldagame.R;
 import com.github.ruslanjava.baldagame.cellBoard.cell.CellState;
 import com.github.ruslanjava.baldagame.cellBoard.cell.CellView;
-import com.github.ruslanjava.baldagame.cellBoard.keyboard.KeyboardDialog;
-import com.github.ruslanjava.baldagame.cellBoard.keyboard.KeyboardDialogListener;
-import com.github.ruslanjava.baldagame.cellBoard.keyboard.KeyboardType;
+import com.github.ruslanjava.baldagame.cellBoard.keyboardDialog.KeyboardDialog;
+import com.github.ruslanjava.baldagame.cellBoard.keyboardDialog.KeyboardDialogListener;
+import com.github.ruslanjava.baldagame.cellBoard.keyboardDialog.KeyboardType;
 import com.github.ruslanjava.baldagame.cellBoard.arrows.ArrowsView;
 
 public class CellBoardView extends FrameLayout {

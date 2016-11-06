@@ -1,8 +1,7 @@
-package com.github.ruslanjava.baldagame.cellBoard.keyboard;
+package com.github.ruslanjava.baldagame.cellBoard.keyboardDialog;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,11 +16,9 @@ public class KeyboardDialog extends Dialog {
     private KeyboardDialogListener listener;
 
     public KeyboardDialog(Context context, KeyboardType type, KeyboardDialogListener listener) {
-        super(context);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        super(context, R.style.AppTheme);
         Window window = getWindow();
-        window.setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        window.getAttributes().windowAnimations = R.style.KeyboardDialogAnimation;
+        window.setBackgroundDrawableResource(R.color.keyboardDialogBackground);
         setContentView(R.layout.keyboard);
         FrameLayout keyboardContainer = (FrameLayout) findViewById(R.id.keyboard_container);
 

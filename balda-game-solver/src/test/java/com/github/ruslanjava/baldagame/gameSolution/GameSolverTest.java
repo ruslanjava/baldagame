@@ -26,6 +26,9 @@ public class GameSolverTest {
         urlString = urlString.replace("/build/classes", "/build/resources");
         String fileName = urlString.substring("file:".length()) + "dictionary.rdict";
         tree = new FilePrefixTree(fileName);
+
+        List<String> words = tree.getFiveLetterWords();
+        System.out.println(words);
     }
 
     @AfterClass

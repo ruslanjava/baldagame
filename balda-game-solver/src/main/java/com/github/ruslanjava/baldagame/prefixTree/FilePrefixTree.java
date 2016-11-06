@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -29,6 +30,12 @@ public final class FilePrefixTree {
         return root;
     }
 
+    public String getRandomFiveLetterWord() {
+        List<String> words = getFiveLetterWords();
+        Collections.shuffle(words);
+        return words.get(0);
+    }
+
     public List<String> getFiveLetterWords() {
         List<String> result = new ArrayList<>();
         addFiveLetterWords(result, root, 0);
@@ -44,12 +51,13 @@ public final class FilePrefixTree {
     }
 
     private void addFiveLetterWords(List<String> result, FilePrefixTreeNode node, int level) {
-        if (level < 4) {
+        if (level < 5) {
             char[] letters = node.getChildLetters();
             for (char letter : letters) {
                 FilePrefixTreeNode child = node.getChild(letter);
                 addFiveLetterWords(result, child, level + 1);
             }
+            return;
         }
         if (node.hasValue()) {
             result.add(node.toString());

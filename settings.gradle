@@ -1,2 +1,3 @@
-include ':balda-dictionary-generator', ':balda-game-solver'
+include ':balda-game-solver-dictionary-generator'
+include ':balda-game-solver'
 include ':balda-application'
