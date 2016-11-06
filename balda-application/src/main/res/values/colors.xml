@@ -6,6 +6,9 @@
 
     <color name="keyboardDialogBackground">#55000000</color>
 
+    <color name="confirmDialogText">#FFBB55</color>
+    <color name="confirmDialogBackground">#55000000</color>
+
     <color name="normalCellBackgroundTop">#999999</color>
     <color name="normalCellBackgroundBottom">#222222</color>
     <color name="newCellBackgroundTop">#999999</color>

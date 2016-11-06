@@ -1,6 +1,6 @@
 package com.github.ruslanjava.baldagame.cellBoard.keyboardDialog;
 
-public interface KeyboardDialogListener {
+public interface OnLetterSelectedListener {
 
     void onLetterSelected(char letter);
 

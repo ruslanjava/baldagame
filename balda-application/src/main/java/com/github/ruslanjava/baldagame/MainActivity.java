@@ -6,6 +6,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 
@@ -47,7 +48,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void showError(Throwable t) {
-        Snackbar snackbar = Snackbar.make(coordinatorLayout, t.toString(), Snackbar.LENGTH_LONG);
+        showError(t.toString());
+    }
+
+    void showError(String message) {
+        Snackbar snackbar = Snackbar.make(coordinatorLayout, message, Snackbar.LENGTH_LONG);
         View sbView = snackbar.getView();
         TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
         textView.setTextColor(Color.YELLOW);

@@ -6,6 +6,8 @@ import java.io.IOException;
 class TextParagraphReader implements AutoCloseable {
 
     private BufferedReader reader;
+    private String unreadLine;
+
     private StringBuilder paragraphBuilder;
 
     TextParagraphReader(BufferedReader reader) {
@@ -17,14 +19,16 @@ class TextParagraphReader implements AutoCloseable {
         String result;
 
         String line;
-        while ((line = reader.readLine()) != null) {
+        while ((line = readLine()) != null) {
             if (line.startsWith("     ")) {
                 if (paragraphBuilder.length() > 0) {
                     result = paragraphBuilder.toString();
                     paragraphBuilder.setLength(0);
+                    unreadLine = line;
                     return result;
+                } else {
+                    paragraphBuilder.append(line.trim());
                 }
-                paragraphBuilder.append(line.trim());
             } else {
                 if (paragraphBuilder.length() > 0) {
                     if (paragraphBuilder.charAt(paragraphBuilder.length() - 1) != ' ') {
@@ -42,6 +46,15 @@ class TextParagraphReader implements AutoCloseable {
         }
 
         return null;
+    }
+
+    private String readLine() throws IOException {
+        if (unreadLine != null) {
+            String result = unreadLine;
+            unreadLine = null;
+            return result;
+        }
+        return reader.readLine();
     }
 
     @Override

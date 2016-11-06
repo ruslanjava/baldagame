@@ -6,6 +6,7 @@ import com.github.ruslanjava.baldagame.dictionaryGenerator.textDictionaryReader.
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStreamReader;
 
@@ -29,7 +30,9 @@ public class DictionaryGenerator {
 
         for (String fileName : FILE_NAMES) {
             InputStreamReader isReader = new InputStreamReader(
-                    DictionaryGenerator.class.getResourceAsStream(fileName), "koi8-r"
+                    // DictionaryGenerator.class.getResourceAsStream(fileName),
+                    new FileInputStream("/home/ruslan/android/baldagame/balda-game-solver-dictionary-generator/src/main/resources/com/github/ruslanjava/baldagame/dictionaryGenerator/" + fileName),
+                    "koi8-r"
             );
             try (ParagraphReader reader = new ParagraphReader(new BufferedReader(isReader))) {
                 Paragraph paragraph;

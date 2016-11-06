@@ -6,11 +6,10 @@ import android.content.DialogInterface;
 import android.graphics.Canvas;
 import android.os.Parcelable;
 import android.util.AttributeSet;
+import android.util.StringBuilderPrinter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
-
-import java.util.ArrayList;
 
 import icepick.Icepick;
 import icepick.State;
@@ -18,10 +17,13 @@ import icepick.State;
 import com.github.ruslanjava.baldagame.R;
 import com.github.ruslanjava.baldagame.cellBoard.cell.CellState;
 import com.github.ruslanjava.baldagame.cellBoard.cell.CellView;
+import com.github.ruslanjava.baldagame.cellBoard.confirmWordDialog.ConfirmWordDialog;
 import com.github.ruslanjava.baldagame.cellBoard.keyboardDialog.KeyboardDialog;
-import com.github.ruslanjava.baldagame.cellBoard.keyboardDialog.KeyboardDialogListener;
+import com.github.ruslanjava.baldagame.cellBoard.keyboardDialog.OnLetterSelectedListener;
 import com.github.ruslanjava.baldagame.cellBoard.keyboardDialog.KeyboardType;
 import com.github.ruslanjava.baldagame.cellBoard.arrows.ArrowsView;
+
+import java.util.List;
 
 public class CellBoardView extends FrameLayout {
 
@@ -34,7 +36,9 @@ public class CellBoardView extends FrameLayout {
     };
 
     @State
-    int[] dialogLetterXY;
+    int dialogLetterX;
+    @State
+    int dialogLetterY;
 
     @State
     KeyboardType keyboardType;
@@ -43,13 +47,16 @@ public class CellBoardView extends FrameLayout {
     BoardState boardState;
 
     @State
-    ArrayList<Cell> cellPath;
+    CellPath cellPath;
 
-    private KeyboardDialog dialog;
+    private KeyboardDialog keyboardDialog;
+    private ConfirmWordDialog confirmWordDialog;
 
     private ArrowsView arrowsView;
 
     private CellView[][] cellViews;
+
+    private OnWordEnteredListener listener;
 
     public CellBoardView(Context context) {
         super(context);
@@ -74,7 +81,7 @@ public class CellBoardView extends FrameLayout {
         addView(boardLayout);
 
         arrowsView = new ArrowsView(context);
-        cellPath = new ArrayList<>();
+        cellPath = new CellPath();
         arrowsView.setCellPath(cellPath);
 
         cellViews = new CellView[5][5];
@@ -90,18 +97,58 @@ public class CellBoardView extends FrameLayout {
         boardState = BoardState.IDLE;
     }
 
-    @Override
-    public void dispatchDraw(Canvas canvas) {
-        super.dispatchDraw(canvas);
-        canvas.save();
-        arrowsView.draw(canvas, super.getWidth(), super.getHeight());
-        canvas.restore();
+    public void setOnWordEnteredListener(OnWordEnteredListener listener) {
+        this.listener = listener;
+    }
+
+    public void addWord() {
+        clearSelection();
+        cellViews[dialogLetterY][dialogLetterX].setState(CellState.NORMAL);
+        boardState = BoardState.IDLE;
+        invalidate();
+    }
+
+    public void cancelWord() {
+        clearSelection();
+        cellViews[dialogLetterY][dialogLetterX].setState(CellState.NORMAL);
+        cellViews[dialogLetterY][dialogLetterX].setLetter(' ');
+        boardState = BoardState.IDLE;
+        invalidate();
+    }
+
+    public boolean hasInitialWord() {
+        return cellViews[2][0].getLetter() != ' ';
+    }
+
+    public void setInitialWord(String word) {
+        for (int y = 0; y < 5; y++) {
+            for (int x = 0; x < 5; x++) {
+                CellView cellView = cellViews[y][x];
+                cellView.setState(CellState.NORMAL);
+                cellView.setLetter(y == 2 ? Character.toUpperCase(word.charAt(x)) : ' ');
+                cellView.invalidate();
+            }
+        }
+        invalidate();
+    }
+
+    public char[][] getBoard() {
+        char[][] result = new char[5][5];
+        for (int y = 0; y < 5; y++) {
+            for (int x = 0; x < 5; x++) {
+                result[y][x] = Character.toLowerCase(cellViews[y][x].getLetter());
+            }
+        }
+        return result;
     }
 
     @Override
     public Parcelable onSaveInstanceState() {
-        if (dialog != null) {
-            dialog.dismiss();
+        if (keyboardDialog != null) {
+            keyboardDialog.dismiss();
+        }
+        if (confirmWordDialog != null) {
+            confirmWordDialog.dismiss();
         }
         return Icepick.saveInstanceState(this, super.onSaveInstanceState());
     }
@@ -111,41 +158,26 @@ public class CellBoardView extends FrameLayout {
         super.onRestoreInstanceState(Icepick.restoreInstanceState(this, restoredState));
         arrowsView.setCellPath(cellPath);
         if (boardState == BoardState.NEW_LETTER_DIALOG) {
-            showKeyboardDialog(dialogLetterXY[0], dialogLetterXY[1]);
+            showKeyboardDialog(dialogLetterX, dialogLetterY);
+        } else if (boardState == BoardState.CONFIRM_WORD_DIALOG) {
+            showConfirmWordDialog();
         }
     }
 
-    public char getLetter(int x, int y) {
-        return cellViews[y][x].getLetter();
-    }
-
-    public void setLetter(int x, int y, char letter) {
-        CellView cellView = cellViews[y][x];
-        cellView.setLetter(letter);
-        cellView.setState(CellState.NORMAL);
-        cellView.invalidate();
-    }
-
-    public void setInitialWord(String word) {
-        clear();
-        for (int i = 0; i < 5; i++) {
-            setLetter(i, 2, word.charAt(i));
-        }
-    }
-
-    public void clear() {
-        for (int y = 0; y < 5; y++) {
-            for (int x = 0; x < 5; x++) {
-                cellViews[y][x].setLetter(' ');
-            }
-        }
-        invalidate();
+    @Override
+    protected void dispatchDraw(Canvas canvas) {
+        super.dispatchDraw(canvas);
+        canvas.save();
+        arrowsView.draw(canvas, super.getWidth(), super.getHeight());
+        canvas.restore();
     }
 
     private void showKeyboardDialog(final int x, final int y) {
-        dialogLetterXY = new int[]{x, y};
+        dialogLetterX = x;
+        dialogLetterY = y;
         boardState = BoardState.NEW_LETTER_DIALOG;
-        dialog = new KeyboardDialog(getContext(), keyboardType, new KeyboardDialogListener() {
+        keyboardDialog = new KeyboardDialog(getContext(), keyboardType);
+        keyboardDialog.setOnLetterSelectedListener(new OnLetterSelectedListener() {
             @Override
             public void onLetterSelected(char letter) {
                 CellView cellView = cellViews[y][x];
@@ -155,23 +187,45 @@ public class CellBoardView extends FrameLayout {
                 boardState = BoardState.PATH;
             }
         });
-        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+        keyboardDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialogInterface) {
                 boardState = BoardState.IDLE;
             }
         });
-        dialog.show();
+        keyboardDialog.show();
+    }
+
+    private void showConfirmWordDialog() {
+        boardState = BoardState.CONFIRM_WORD_DIALOG;
+
+        final String word = getWord();
+        confirmWordDialog = new ConfirmWordDialog(getContext(), word);
+        confirmWordDialog.setOkButtonListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (listener != null) {
+                    listener.onWordEntered(word);
+                }
+            }
+        });
+        confirmWordDialog.setCancelButtonListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cancelWord();
+            }
+        });
+        confirmWordDialog.show();
     }
 
     private void addCellToPath(int x, int y) {
         CellState state = cellViews[y][x].getState();
 
-        Cell lastCell = cellPath.isEmpty() ? null : cellPath.get(cellPath.size() - 1);
+        Cell lastCell = cellPath.getLastCell();
         Cell cell = new Cell(x, y);
 
         // простой случай A - ячейка просто продолжает слово
-        if (isNextCell(cell)) {
+        if (cellPath.isNextCell(cell)) {
             if (state == CellState.NEW) {
                 cellViews[y][x].setState(CellState.NEW_SELECTED);
             } else {
@@ -184,7 +238,9 @@ public class CellBoardView extends FrameLayout {
 
         // простой случай B - щелкнули по той же самой букве цепочки
         if (cellPath.size() > 1 && cell.equals(lastCell)) {
-            onWordSelected();
+            if (cellViews[dialogLetterY][dialogLetterX].getState() == CellState.NEW_SELECTED) {
+                showConfirmWordDialog();
+            }
             return;
         }
 
@@ -209,17 +265,6 @@ public class CellBoardView extends FrameLayout {
         invalidate();
     }
 
-    private boolean isNextCell(Cell cell) {
-        if (cellPath.isEmpty()) {
-            return true;
-        }
-        if (cellPath.contains(cell)) {
-            return false;
-        }
-        Cell lastCell = cellPath.get(cellPath.size() - 1);
-        return lastCell.isNeighbour(cell);
-    }
-
     private void clearSelection() {
         for (Cell cell : cellPath) {
             CellView cellView = cellViews[cell.y][cell.x];
@@ -232,9 +277,25 @@ public class CellBoardView extends FrameLayout {
             }
         }
         cellPath.clear();
+        arrowsView.setCellPath(cellPath);
     }
 
-    private void onWordSelected() {
+    private String getWord() {
+        StringBuilder builder = new StringBuilder();
+        for (Cell cell : cellPath) {
+            char letter = cellViews[cell.y][cell.x].getLetter();
+            builder.append(letter);
+        }
+        return builder.toString();
+    }
+
+    public void addComputerMove(int x, int y, char letter, List<int[]> path) {
+        boardState = BoardState.COMPUTER_MOVE;
+        cellViews[y][x].setState(CellState.NEW_SELECTED);
+        cellViews[y][x].setLetter(Character.toUpperCase(letter));
+        for (int[] xy : path) {
+            cellPath.add(new Cell(xy[0], xy[1]));
+        }
     }
 
     private class LetterViewListener implements View.OnClickListener {
@@ -242,7 +303,7 @@ public class CellBoardView extends FrameLayout {
         private int x;
         private int y;
 
-        public LetterViewListener(int x, int y) {
+        LetterViewListener(int x, int y) {
             this.x = x;
             this.y = y;
         }
@@ -253,6 +314,8 @@ public class CellBoardView extends FrameLayout {
             char letter = cellView.getLetter();
 
             switch (boardState) {
+                case COMPUTER_MOVE:
+                    return;
                 case IDLE:
                     if (letter == ' ' && hasNonEmptyNeighbour(x, y)) {
                         showKeyboardDialog(x, y);
@@ -268,6 +331,10 @@ public class CellBoardView extends FrameLayout {
             }
 
             cellView.invalidate();
+        }
+
+        private char getLetter(int x, int y) {
+            return cellViews[y][x].getLetter();
         }
 
         private boolean hasNonEmptyNeighbour(int x, int y) {

@@ -108,12 +108,11 @@ public class GameSolver {
 
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i <= level; i++) {
-            int[] letterXY = new int[]{pathX[i], pathY[i]};
-            path.add(letterXY);
+            path.add(new int[]{pathX[i], pathY[i]});
             Cell cell = cellBoard.get(pathX[i], pathY[i]);
             if (cell.letter == ' ') {
                 solution.setNewLetter(newLetter);
-                solution.setNewLetterPosition(letterXY);
+                solution.setNewLetterPosition(pathX[i], pathY[i]);
                 builder.append(newLetter);
             } else {
                 builder.append(cell.letter);

@@ -27,4 +27,9 @@ public class MainActivityFragment extends Fragment {
         mainActivity.showError(t);
     }
 
+    protected void showError(String message) {
+        MainActivity mainActivity = (MainActivity) getActivity();
+        mainActivity.showError(message);
+    }
+
 }

@@ -4,18 +4,24 @@ import java.util.List;
 
 public class GameSolution implements Comparable<GameSolution> {
 
-    private int[] newLetterXY;
+    private int newLetterX;
+    private int newLetterY;
     private char newLetter;
 
     private List<int[]> path;
     private String word;
 
-    public int[] getNewLetterXY() {
-        return newLetterXY;
+    public int getNewLetterX() {
+        return newLetterX;
     }
 
-    void setNewLetterPosition(int[] newLetterXY) {
-        this.newLetterXY = newLetterXY;
+    public int getNewLetterY() {
+        return newLetterY;
+    }
+
+    void setNewLetterPosition(int newLetterX, int newLetterY) {
+        this.newLetterX = newLetterX;
+        this.newLetterY = newLetterY;
     }
 
     public char getNewLetter() {

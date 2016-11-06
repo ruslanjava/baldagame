@@ -64,4 +64,17 @@ public final class FilePrefixTree {
         }
     }
 
+    public boolean containsWord(String word) {
+        FilePrefixTreeNode node = root;
+        for (int i = 0; i < word.length(); i++) {
+            char letter = word.charAt(i);
+            FilePrefixTreeNode child = node.getChild(letter);
+            if (child == null) {
+                return false;
+            }
+            node = child;
+        }
+        return node.hasValue();
+    }
+
 }
