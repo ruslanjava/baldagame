@@ -53,6 +53,7 @@ public class SplashFragment extends MainActivityFragment {
         public void onCompleted() {
             Context context = getContext();
             CopyFileObservable.create(context.getAssets(), context.getFilesDir(), "dictionary.rdict", size)
+                    .onBackpressureDrop()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new CopyFileObserver());

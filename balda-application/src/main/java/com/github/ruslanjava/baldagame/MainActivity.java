@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void showError(Throwable t) {
+        t.printStackTrace();
         showError(t.toString());
     }
 

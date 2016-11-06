@@ -294,8 +294,13 @@ public class CellBoardView extends FrameLayout {
         cellViews[y][x].setState(CellState.NEW_SELECTED);
         cellViews[y][x].setLetter(Character.toUpperCase(letter));
         for (int[] xy : path) {
-            cellPath.add(new Cell(xy[0], xy[1]));
+            int pathX = xy[0];
+            int pathY = xy[1];
+            cellPath.add(new Cell(pathX, pathY));
+            cellViews[pathY][pathX].setState(CellState.SELECTED);
+            cellViews[pathY][pathX].invalidate();
         }
+        invalidate();
     }
 
     private class LetterViewListener implements View.OnClickListener {
