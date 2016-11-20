@@ -6,13 +6,13 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import icepick.Icepick;
+import icepick.State;
 
 import com.github.ruslanjava.baldagame.game.GameFragment;
 import com.github.ruslanjava.baldagame.splash.SplashFragment;
@@ -22,6 +22,9 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.coordinatorLayout)
     CoordinatorLayout coordinatorLayout;
 
+    @State
+    Class<? extends MainActivityFragment> mainFragmentClass;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,8 +32,10 @@ public class MainActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        showSplashFragment();
         Icepick.restoreInstanceState(this, savedInstanceState);
+        if (mainFragmentClass == null) {
+            showSplashFragment();
+        }
     }
 
     public void showSplashFragment() {
@@ -61,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showFragment(MainActivityFragment fragment) {
+        this.mainFragmentClass = fragment.getClass();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragmentContainer, fragment);
         transaction.commit();

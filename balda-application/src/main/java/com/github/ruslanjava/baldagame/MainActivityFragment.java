@@ -11,7 +11,7 @@ import butterknife.ButterKnife;
 public class MainActivityFragment extends Fragment {
 
     @Override
-    public final View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         FragmentLayout layout = getClass().getAnnotation(FragmentLayout.class);
         if (layout == null) {

@@ -1,6 +1,10 @@
 package com.github.ruslanjava.baldagame.splash;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.github.ruslanjava.baldagame.FragmentLayout;
@@ -10,9 +14,10 @@ import com.github.ruslanjava.baldagame.R;
 import com.github.ruslanjava.baldagame.cellBoard.CellBoardView;
 
 import butterknife.BindView;
-import rx.Observer;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
+import io.reactivex.subjects.ReplaySubject;
 
 @FragmentLayout(R.layout.splash_fragment)
 public class SplashFragment extends MainActivityFragment {
@@ -23,21 +28,42 @@ public class SplashFragment extends MainActivityFragment {
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
 
+    private ReplaySubject<Integer> subject;
+    private CopyFileObserver observer;
+
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View result = super.onCreateView(inflater, container, savedInstanceState);
+        setRetainInstance(true);
+        if (savedInstanceState == null) {
+            Context context = getActivity();
+            subject = ReplaySubject.create();
+            CopyFileObservable.create(context, "dictionary.rdict")
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(subject);
+
+        }
+        return result;
+    }
+
     @Override
     public void onResume() {
         super.onResume();
+        progressBar.setMax(100);
         cellBoardView.setInitialWord("БАЛДА");
 
-        Context context = getActivity();
-        AssetSizeOberservable.create(context.getAssets(), "dictionary.rdict")
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new AssetSizeObserver());
+        observer = new CopyFileObserver();
+        subject.subscribe(observer);
     }
 
-    private class AssetSizeObserver implements Observer<Long> {
+    @Override
+    public void onPause() {
+        super.onPause();
+        observer.dispose();
+    }
 
-        private Long size;
+    private class CopyFileObserver extends DisposableObserver<Integer> {
 
         @Override
         public void onError(Throwable e) {
@@ -45,36 +71,12 @@ public class SplashFragment extends MainActivityFragment {
         }
 
         @Override
-        public void onNext(Long size) {
-            this.size = size;
-        }
-
-        @Override
-        public void onCompleted() {
-            Context context = getContext();
-            CopyFileObservable.create(context.getAssets(), context.getFilesDir(), "dictionary.rdict", size)
-                    .onBackpressureDrop()
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new CopyFileObserver());
-        }
-
-    }
-
-    private class CopyFileObserver implements Observer<Integer> {
-
-        @Override
-        public void onError(Throwable e) {
-            showError(e);
-        }
-
-        @Override
-        public void onNext(Integer percent) {
+        public void onNext(final Integer percent) {
             progressBar.setProgress(percent);
         }
 
         @Override
-        public void onCompleted() {
+        public void onComplete() {
             MainActivity mainActivity = (MainActivity) getActivity();
             mainActivity.showGameFragment();
         }

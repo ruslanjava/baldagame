@@ -9,8 +9,11 @@ import org.testng.annotations.Test;
 
 import java.net.URL;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+
+import io.reactivex.Observable;
 
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -39,9 +42,9 @@ public class GameSolverTest {
     @Test(dataProvider = "data")
     void testSolver(String word, char[][] board) throws Exception {
         GameSolver solver = new GameSolver(tree);
-        Set<String> words = new HashSet<>();
 
-        List<GameSolution> solutions = solver.solve(board);
+        Set<String> words = new HashSet<>();
+        Iterable<GameSolution> solutions = solver.getSolutions(board).blockingIterable();
         for (GameSolution solution : solutions) {
             words.add(solution.getWord());
         }

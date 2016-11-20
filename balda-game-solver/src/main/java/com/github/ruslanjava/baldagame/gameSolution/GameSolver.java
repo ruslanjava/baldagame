@@ -4,8 +4,11 @@ import com.github.ruslanjava.baldagame.prefixTree.FilePrefixTree;
 import com.github.ruslanjava.baldagame.prefixTree.FilePrefixTreeNode;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
 
 public class GameSolver {
 
@@ -30,20 +33,26 @@ public class GameSolver {
      *
      * @return список возможных решений.
      */
-    public List<GameSolution> solve(char[][] board) {
-        List<GameSolution> result = new ArrayList<>();
-        cellBoard.update(board);
-        for (int y = 0; y < 5; y++) {
-            for (int x = 0; x < 5; x++) {
-                Cell cell = cellBoard.get(x, y);
-                searchSolution(result, root, 0, cell, ' ');
-            }
-        }
-        Collections.sort(result);
-        return result;
+    public Observable<GameSolution> getSolutions(final char[][] board) {
+        return Observable.create(
+                new ObservableOnSubscribe<GameSolution>() {
+
+                    @Override
+                    public void subscribe(ObservableEmitter<GameSolution> emitter) {
+                        cellBoard.update(board);
+                        for (int y = 0; y < 5; y++) {
+                            for (int x = 0; x < 5; x++) {
+                                Cell cell = cellBoard.get(x, y);
+                                searchSolution(emitter, root, 0, cell, ' ');
+                            }
+                        }
+                        emitter.onComplete();
+                    }
+                }
+        );
     }
 
-    private void searchSolution(List<GameSolution> result, FilePrefixTreeNode node, int level,
+    private void searchSolution(ObservableEmitter<GameSolution> emitter, FilePrefixTreeNode node, int level,
                                 Cell cell, char newLetter) {
         if (cell == null) {
             return;
@@ -63,15 +72,15 @@ public class GameSolver {
             }
 
             if (child.hasValue() && newLetter != ' ') {
-                GameSolution decision = getSolution(level, newLetter);
-                result.add(decision);
+                GameSolution solution = getSolution(level, newLetter);
+                emitter.onNext(solution);
             }
 
             cell.visited = true;
-            searchSolution(result, child, level + 1, cell.up, newLetter);
-            searchSolution(result, child, level + 1, cell.left, newLetter);
-            searchSolution(result, child, level + 1, cell.right, newLetter);
-            searchSolution(result, child, level + 1, cell.down, newLetter);
+            searchSolution(emitter, child, level + 1, cell.up, newLetter);
+            searchSolution(emitter, child, level + 1, cell.left, newLetter);
+            searchSolution(emitter, child, level + 1, cell.right, newLetter);
+            searchSolution(emitter, child, level + 1, cell.down, newLetter);
             cell.visited = false;
             return;
         }
@@ -88,14 +97,14 @@ public class GameSolver {
             cell.visited = true;
 
             if (child.hasValue()) {
-                GameSolution decision = getSolution(level, possibleNewLetter);
-                result.add(decision);
+                GameSolution solution = getSolution(level, possibleNewLetter);
+                emitter.onNext(solution);
             }
 
-            searchSolution(result, child, level + 1, cell.up, possibleNewLetter);
-            searchSolution(result, child, level + 1, cell.left, possibleNewLetter);
-            searchSolution(result, child, level + 1, cell.right, possibleNewLetter);
-            searchSolution(result, child, level + 1, cell.down, possibleNewLetter);
+            searchSolution(emitter, child, level + 1, cell.up, possibleNewLetter);
+            searchSolution(emitter, child, level + 1, cell.left, possibleNewLetter);
+            searchSolution(emitter, child, level + 1, cell.right, possibleNewLetter);
+            searchSolution(emitter, child, level + 1, cell.down, possibleNewLetter);
 
             cell.visited = false;
         }
