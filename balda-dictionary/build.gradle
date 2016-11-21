@@ -1,0 +1,17 @@
+apply plugin: 'java'
+
+task makeDictionary(type: JavaExec) {
+    classpath sourceSets.main.runtimeClasspath
+    main = 'com.github.ruslanjava.baldagame.dictionaryGenerator.DictionaryGenerator'
+    args = [ "${buildDir.absolutePath}/dictionary.rdict" ]
+}
+
+jar {
+    from ("${buildDir}") {
+        include 'dictionary.rdict'
+        exclude 'com/**/*'
+    }
+}
+
+makeDictionary.dependsOn classes
+jar.dependsOn makeDictionary

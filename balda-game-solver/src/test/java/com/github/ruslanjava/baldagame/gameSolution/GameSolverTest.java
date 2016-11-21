@@ -9,11 +9,8 @@ import org.testng.annotations.Test;
 
 import java.net.URL;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-
-import io.reactivex.Observable;
 
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -24,13 +21,10 @@ public class GameSolverTest {
 
     @BeforeClass
     static void init() {
-        URL url = GameSolverTest.class.getResource(".");
-        String urlString = url.toString();
-        urlString = urlString.replace("/build/classes", "/build/resources");
+        URL url = DictionaryTest.class.getResource(".");
         String fileName = urlString.substring("file:".length()) + "dictionary.rdict";
         tree = new FilePrefixTree(fileName);
-
-        List<String> words = tree.getFiveLetterWords();
+        List<String> words = tree.getFiveLetterWords().toList().blockingGet();
         System.out.println(words);
     }
 

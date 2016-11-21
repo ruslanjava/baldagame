@@ -6,6 +6,12 @@ android {
     compileSdkVersion 24
     buildToolsVersion "23.0.3"
 
+    sourceSets {
+        main {
+            assets.srcDirs = [ 'src/main/assets/', "${buildDir.absolutePath}/assets" ]
+        }
+    }
+
     defaultConfig {
         applicationId "com.github.ruslanjava.baldagame"
         minSdkVersion 21
@@ -28,6 +34,7 @@ android {
 
 dependencies {
 
+    compile project(':balda-dictionary')
     compile project(':balda-game-solver')
 
     compile 'com.android.support:percent:24.2.1'
