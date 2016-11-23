@@ -3,8 +3,10 @@ apply plugin: 'java'
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
 
-task copyDictionary {
-
+task copyDictionary(type: Copy) {
+    def dictionaryDir = project(':balda-dictionary').buildDir;
+    from "${dictionaryDir.absolutePath}/${dictFile}"
+    into("${projectDir}/src/test/resources/com/github/ruslanjava/baldagame/gameSolution")
 }
 
 test {
@@ -12,12 +14,14 @@ test {
     testLogging.showStandardStreams = true
 }
 
+copyDictionary.dependsOn ':balda-dictionary:makeDictionary'
+processTestResources.dependsOn copyDictionary
+
 dependencies {
 
     compile 'io.reactivex.rxjava2:rxjava:2.0.1'
     testCompile 'io.reactivex.rxjava2:rxjava:2.0.1'
 
-    testCompile project(':balda-dictionary')
     testCompile 'org.testng:testng:6.9.9'
     testCompile 'org.hamcrest:hamcrest-core:1.3'
     testCompile 'org.hamcrest:hamcrest-library:1.3'

@@ -7,6 +7,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import java.io.File;
 import java.net.URL;
 import java.util.HashSet;
 import java.util.List;
@@ -21,9 +22,9 @@ public class GameSolverTest {
 
     @BeforeClass
     static void init() {
-        URL url = DictionaryTest.class.getResource(".");
-        String fileName = urlString.substring("file:".length()) + "dictionary.rdict";
-        tree = new FilePrefixTree(fileName);
+        URL url = GameSolverTest.class.getResource(".");
+        String fileName = url.toString().replace("/classes", "/resources");
+        tree = new FilePrefixTree(fileName.replace("file:", "") + "dictionary.rdict");
         List<String> words = tree.getFiveLetterWords().toList().blockingGet();
         System.out.println(words);
     }

@@ -33,6 +33,11 @@ class CopyFileObservable {
                             }
 
                             File destinationFile = new File(destinationDirectory, fileName);
+                            if (destinationFile.exists() && destinationFile.length() == expectedSize) {
+                                subscriber.onComplete();
+                                return;
+                            }
+
                             try (OutputStream os = new FileOutputStream(destinationFile)) {
                                 try (InputStream is = assetManager.open(fileName)) {
                                     byte[] buffer = new byte[10 * 1024];

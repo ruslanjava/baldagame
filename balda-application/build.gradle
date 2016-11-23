@@ -2,6 +2,16 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'me.tatarka.retrolambda'
 
+clean {
+    delete "${projectDir}/src/main/assets/$dictFile"
+}
+
+task copyDictionary(type: Copy) {
+    def dictionaryDir = project(':balda-dictionary').buildDir;
+    from "${dictionaryDir.absolutePath}/$dictFile"
+    into("${projectDir}/src/main/assets")
+}
+
 android {
     compileSdkVersion 24
     buildToolsVersion "23.0.3"
@@ -32,9 +42,11 @@ android {
     }
 }
 
+copyDictionary.dependsOn ':balda-dictionary:makeDictionary'
+preBuild.dependsOn copyDictionary
+
 dependencies {
 
-    compile project(':balda-dictionary')
     compile project(':balda-game-solver')
 
     compile 'com.android.support:percent:24.2.1'
