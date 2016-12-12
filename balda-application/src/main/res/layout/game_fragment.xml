@@ -1,11 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.percent.PercentFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="@android:color/darker_gray"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.github.ruslanjava.baldagame.cellBoard.CellBoardView
-        android:id="@+id/cellBoardView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    <TextView android:id="@+id/playerScoresView"
+        app:layout_widthPercent="50%"
+        app:layout_heightPercent="10%"
+        app:layout_marginLeftPercent="0%"
+        app:layout_marginTopPercent="0%" />
 
-</FrameLayout>
+    <TextView android:id="@+id/computerScoresView"
+        app:layout_widthPercent="50%"
+        app:layout_heightPercent="10%"
+        app:layout_marginLeftPercent="50%"
+        app:layout_marginTopPercent="0%" />
+
+    <ListView android:id="@+id/playerWordsList"
+        app:layout_widthPercent="50%"
+        app:layout_heightPercent="15%"
+        app:layout_marginLeftPercent="0%"
+        app:layout_marginTopPercent="10%"
+        android:background="@color/colorPrimaryDark"/>
+
+    <ListView android:id="@+id/computerWordsList"
+        app:layout_widthPercent="50%"
+        app:layout_heightPercent="15%"
+        app:layout_marginLeftPercent="50%"
+        app:layout_marginTopPercent="10%"
+        android:background="@color/colorPrimaryDark"/>
+
+    <com.github.ruslanjava.baldagame.game.gameBoard.GameBoardView
+        android:id="@+id/gameBoardView"
+        app:layout_widthPercent="100%"
+        app:layout_heightPercent="60%"
+        app:layout_marginLeftPercent="0%"
+        app:layout_marginTopPercent="30%"
+        android:paddingBottom="8dp" />
+
+    <LinearLayout
+        app:layout_widthPercent="100%"
+        app:layout_heightPercent="10%"
+        app:layout_marginLeftPercent="0%"
+        app:layout_marginTopPercent="90%"
+        android:weightSum="2.0"
+        android:orientation="horizontal"
+        android:paddingTop="8dp">
+
+        <com.github.ruslanjava.baldagame.game.SendButton android:id="@+id/sendButton"
+            android:layout_width="0dp"
+            android:layout_weight="1.0"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:background="@drawable/normal_cell_background"
+            android:visibility="invisible"
+            android:text="@string/send"/>
+
+        <com.github.ruslanjava.baldagame.game.EraseButton android:id="@+id/eraseButton"
+            android:layout_width="0dp"
+            android:layout_weight="1.0"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:background="@drawable/normal_cell_background"
+            android:visibility="invisible"
+            android:text="@string/clear"/>
+
+    </LinearLayout>
+
+</android.support.percent.PercentFrameLayout>

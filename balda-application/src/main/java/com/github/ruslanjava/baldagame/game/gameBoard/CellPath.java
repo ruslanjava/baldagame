@@ -1,4 +1,4 @@
-package com.github.ruslanjava.baldagame.cellBoard;
+package com.github.ruslanjava.baldagame.game.gameBoard;
 
 import java.util.ArrayList;
 

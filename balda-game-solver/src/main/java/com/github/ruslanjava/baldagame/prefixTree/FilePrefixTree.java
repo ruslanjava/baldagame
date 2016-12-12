@@ -11,6 +11,7 @@ import java.util.concurrent.Callable;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.functions.Function;
 
 /**
  * Префиксное дерево, использующее RandomAccessFile для чтения отдельных узлов.
@@ -36,18 +37,15 @@ public final class FilePrefixTree {
     }
 
     public Observable<String> getRandomFiveLetterWord() {
-        return Observable.fromCallable(
-                new Callable<String>() {
-                    @Override
-                    public String call() throws Exception {
-                        List<String> words = getFiveLetterWords().toList().blockingGet();
-                        int size = words.size();
-                        Random random = new Random(System.currentTimeMillis());
-                        int randomIndex = random.nextInt(size);
-                        return words.get(randomIndex);
-                    }
-                }
-        );
+        return getFiveLetterWords().toList().map(new Function<List<String>, String>() {
+            @Override
+            public String apply(List<String> words) throws Exception {
+                int size = words.size();
+                Random random = new Random(System.currentTimeMillis());
+                int randomIndex = random.nextInt(size);
+                return words.get(randomIndex);
+            }
+        }).toObservable();
     }
 
     public Observable<String> getFiveLetterWords() {
@@ -56,7 +54,8 @@ public final class FilePrefixTree {
 
                     @Override
                     public void subscribe(ObservableEmitter<String> emitter) {
-                        addFiveLetterWords(emitter, root, 0);
+                        StringBuilder builder = new StringBuilder();
+                        addFiveLetterWords(emitter, root, 0, builder);
                         emitter.onComplete();
                     }
                 }
@@ -72,17 +71,23 @@ public final class FilePrefixTree {
     }
 
     private void addFiveLetterWords(ObservableEmitter<String> emitter,
-                                    FilePrefixTreeNode node, int level) {
+                                    FilePrefixTreeNode node, int level, StringBuilder builder) {
         if (level < 5) {
             char[] letters = node.getChildLetters();
+
+            int oldLength = builder.length();
             for (char letter : letters) {
+                builder.append(letter);
+
                 FilePrefixTreeNode child = node.getChild(letter);
-                addFiveLetterWords(emitter, child, level + 1);
+                addFiveLetterWords(emitter, child, level + 1, builder);
+
+                builder.setLength(oldLength);
             }
             return;
         }
         if (node.hasValue()) {
-            emitter.onNext(node.toString());
+            emitter.onNext(builder.toString());
         }
     }
 

@@ -51,7 +51,7 @@ public class SplashFragment extends MainActivityFragment {
     public void onResume() {
         super.onResume();
         progressBar.setMax(100);
-        cellBoardView.setInitialWord("БАЛДА");
+        cellBoardView.setInitialWord(getString(R.string.balda));
 
         observer = new CopyFileObserver();
         subject.subscribe(observer);

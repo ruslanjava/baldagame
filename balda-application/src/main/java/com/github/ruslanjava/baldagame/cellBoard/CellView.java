@@ -1,4 +1,4 @@
-package com.github.ruslanjava.baldagame.cellBoard.cell;
+package com.github.ruslanjava.baldagame.cellBoard;
 
 import android.content.Context;
 import android.content.res.Resources;

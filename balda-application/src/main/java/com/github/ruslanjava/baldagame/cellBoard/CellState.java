@@ -1,4 +1,4 @@
-package com.github.ruslanjava.baldagame.cellBoard.cell;
+package com.github.ruslanjava.baldagame.cellBoard;
 
 import com.github.ruslanjava.baldagame.R;
 

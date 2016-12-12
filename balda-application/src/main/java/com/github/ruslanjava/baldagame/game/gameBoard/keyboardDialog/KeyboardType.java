@@ -1,4 +1,4 @@
-package com.github.ruslanjava.baldagame.cellBoard.keyboardDialog;
+package com.github.ruslanjava.baldagame.game.gameBoard.keyboardDialog;
 
 import com.github.ruslanjava.baldagame.R;
 

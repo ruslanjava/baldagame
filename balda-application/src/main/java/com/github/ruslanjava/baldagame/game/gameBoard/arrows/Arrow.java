@@ -1,4 +1,4 @@
-package com.github.ruslanjava.baldagame.cellBoard.arrows;
+package com.github.ruslanjava.baldagame.game.gameBoard.arrows;
 
 import android.graphics.Canvas;
 import android.graphics.LinearGradient;

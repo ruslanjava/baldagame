@@ -6,155 +6,155 @@
     android:layout_height="match_parent"
     android:background="@android:color/darker_gray">
 
-    <com.github.ruslanjava.baldagame.cellBoard.cell.CellView
+    <com.github.ruslanjava.baldagame.cellBoard.CellView
         android:id="@+id/cell00"
         style="@style/LetterView"
         app:layout_marginLeftPercent="0%"
         app:layout_marginTopPercent="0%" />
 
-    <com.github.ruslanjava.baldagame.cellBoard.cell.CellView
+    <com.github.ruslanjava.baldagame.cellBoard.CellView
         android:id="@+id/cell10"
         style="@style/LetterView"
         app:layout_marginLeftPercent="20%"
         app:layout_marginTopPercent="0%"
         />
-    <com.github.ruslanjava.baldagame.cellBoard.cell.CellView
+    <com.github.ruslanjava.baldagame.cellBoard.CellView
         android:id="@+id/cell20"
         style="@style/LetterView"
         app:layout_marginLeftPercent="40%"
         app:layout_marginTopPercent="0%"
         />
-    <com.github.ruslanjava.baldagame.cellBoard.cell.CellView
+    <com.github.ruslanjava.baldagame.cellBoard.CellView
         android:id="@+id/cell30"
         style="@style/LetterView"
         app:layout_marginLeftPercent="60%"
         app:layout_marginTopPercent="0%"
         />
-    <com.github.ruslanjava.baldagame.cellBoard.cell.CellView
+    <com.github.ruslanjava.baldagame.cellBoard.CellView
         android:id="@+id/cell40"
         style="@style/LetterView"
         app:layout_marginLeftPercent="80%"
         app:layout_marginTopPercent="0%"
         />
 
-    <com.github.ruslanjava.baldagame.cellBoard.cell.CellView
+    <com.github.ruslanjava.baldagame.cellBoard.CellView
         android:id="@+id/cell01"
         style="@style/LetterView"
         app:layout_marginLeftPercent="0%"
         app:layout_marginTopPercent="20%" />
 
-    <com.github.ruslanjava.baldagame.cellBoard.cell.CellView
+    <com.github.ruslanjava.baldagame.cellBoard.CellView
         android:id="@+id/cell11"
         style="@style/LetterView"
         app:layout_marginLeftPercent="20%"
         app:layout_marginTopPercent="20%"
         />
-    <com.github.ruslanjava.baldagame.cellBoard.cell.CellView
+    <com.github.ruslanjava.baldagame.cellBoard.CellView
         android:id="@+id/cell21"
         style="@style/LetterView"
         app:layout_marginLeftPercent="40%"
         app:layout_marginTopPercent="20%"
         />
-    <com.github.ruslanjava.baldagame.cellBoard.cell.CellView
+    <com.github.ruslanjava.baldagame.cellBoard.CellView
         android:id="@+id/cell31"
         style="@style/LetterView"
         app:layout_marginLeftPercent="60%"
         app:layout_marginTopPercent="20%"
         />
-    <com.github.ruslanjava.baldagame.cellBoard.cell.CellView
+    <com.github.ruslanjava.baldagame.cellBoard.CellView
         android:id="@+id/cell41"
         style="@style/LetterView"
         app:layout_marginLeftPercent="80%"
         app:layout_marginTopPercent="20%"
         />
 
-    <com.github.ruslanjava.baldagame.cellBoard.cell.CellView
+    <com.github.ruslanjava.baldagame.cellBoard.CellView
         android:id="@+id/cell02"
         style="@style/LetterView"
         app:layout_marginLeftPercent="0%"
         app:layout_marginTopPercent="40%" />
 
-    <com.github.ruslanjava.baldagame.cellBoard.cell.CellView
+    <com.github.ruslanjava.baldagame.cellBoard.CellView
         android:id="@+id/cell12"
         style="@style/LetterView"
         app:layout_marginLeftPercent="20%"
         app:layout_marginTopPercent="40%"
         />
-    <com.github.ruslanjava.baldagame.cellBoard.cell.CellView
+    <com.github.ruslanjava.baldagame.cellBoard.CellView
         android:id="@+id/cell22"
         style="@style/LetterView"
         app:layout_marginLeftPercent="40%"
         app:layout_marginTopPercent="40%"
         />
-    <com.github.ruslanjava.baldagame.cellBoard.cell.CellView
+    <com.github.ruslanjava.baldagame.cellBoard.CellView
         android:id="@+id/cell32"
         style="@style/LetterView"
         app:layout_marginLeftPercent="60%"
         app:layout_marginTopPercent="40%"
         />
-    <com.github.ruslanjava.baldagame.cellBoard.cell.CellView
+    <com.github.ruslanjava.baldagame.cellBoard.CellView
         android:id="@+id/cell42"
         style="@style/LetterView"
         app:layout_marginLeftPercent="80%"
         app:layout_marginTopPercent="40%"
         />
 
-    <com.github.ruslanjava.baldagame.cellBoard.cell.CellView
+    <com.github.ruslanjava.baldagame.cellBoard.CellView
         android:id="@+id/cell03"
         style="@style/LetterView"
         app:layout_marginLeftPercent="0%"
         app:layout_marginTopPercent="60%" />
 
-    <com.github.ruslanjava.baldagame.cellBoard.cell.CellView
+    <com.github.ruslanjava.baldagame.cellBoard.CellView
         android:id="@+id/cell13"
         style="@style/LetterView"
         app:layout_marginLeftPercent="20%"
         app:layout_marginTopPercent="60%"
         />
-    <com.github.ruslanjava.baldagame.cellBoard.cell.CellView
+    <com.github.ruslanjava.baldagame.cellBoard.CellView
         android:id="@+id/cell23"
         style="@style/LetterView"
         app:layout_marginLeftPercent="40%"
         app:layout_marginTopPercent="60%"
         />
-    <com.github.ruslanjava.baldagame.cellBoard.cell.CellView
+    <com.github.ruslanjava.baldagame.cellBoard.CellView
         android:id="@+id/cell33"
         style="@style/LetterView"
         app:layout_marginLeftPercent="60%"
         app:layout_marginTopPercent="60%"
         />
-    <com.github.ruslanjava.baldagame.cellBoard.cell.CellView
+    <com.github.ruslanjava.baldagame.cellBoard.CellView
         android:id="@+id/cell43"
         style="@style/LetterView"
         app:layout_marginLeftPercent="80%"
         app:layout_marginTopPercent="60%"
         />
 
-    <com.github.ruslanjava.baldagame.cellBoard.cell.CellView
+    <com.github.ruslanjava.baldagame.cellBoard.CellView
         android:id="@+id/cell04"
         style="@style/LetterView"
         app:layout_marginLeftPercent="0%"
         app:layout_marginTopPercent="80%" />
 
-    <com.github.ruslanjava.baldagame.cellBoard.cell.CellView
+    <com.github.ruslanjava.baldagame.cellBoard.CellView
         android:id="@+id/cell14"
         style="@style/LetterView"
         app:layout_marginLeftPercent="20%"
         app:layout_marginTopPercent="80%"
         />
-    <com.github.ruslanjava.baldagame.cellBoard.cell.CellView
+    <com.github.ruslanjava.baldagame.cellBoard.CellView
         android:id="@+id/cell24"
         style="@style/LetterView"
         app:layout_marginLeftPercent="40%"
         app:layout_marginTopPercent="80%"
         />
-    <com.github.ruslanjava.baldagame.cellBoard.cell.CellView
+    <com.github.ruslanjava.baldagame.cellBoard.CellView
         android:id="@+id/cell34"
         style="@style/LetterView"
         app:layout_marginLeftPercent="60%"
         app:layout_marginTopPercent="80%"
         />
-    <com.github.ruslanjava.baldagame.cellBoard.cell.CellView
+    <com.github.ruslanjava.baldagame.cellBoard.CellView
         android:id="@+id/cell44"
         style="@style/LetterView"
         app:layout_marginLeftPercent="80%"

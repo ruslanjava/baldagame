@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import com.github.ruslanjava.baldagame.FragmentLayout;
 import com.github.ruslanjava.baldagame.MainActivityFragment;
 import com.github.ruslanjava.baldagame.R;
-import com.github.ruslanjava.baldagame.cellBoard.CellBoardView;
+import com.github.ruslanjava.baldagame.game.gameBoard.GameBoardView;
 import com.github.ruslanjava.baldagame.gameSolution.GameSolution;
 import com.github.ruslanjava.baldagame.gameSolution.GameSolver;
 import com.github.ruslanjava.baldagame.prefixTree.FilePrefixTree;
@@ -18,6 +18,7 @@ import java.util.HashSet;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import icepick.State;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -27,22 +28,26 @@ import io.reactivex.schedulers.Schedulers;
 @FragmentLayout(R.layout.game_fragment)
 public class GameFragment extends MainActivityFragment {
 
-    @BindView(R.id.cellBoardView)
-    CellBoardView cellBoardView;
+    @BindView(R.id.gameBoardView)
+    GameBoardView gameBoardView;
 
-    private FilePrefixTree tree;
-    private GameSolver gameSolver;
+    @BindView(R.id.sendButton)
+    SendButton sendButton;
+
+    @BindView(R.id.eraseButton)
+    EraseButton eraseButton;
 
     @State
     HashSet<String> userWords;
+
+    private FilePrefixTree tree;
+    private GameSolver gameSolver;
 
     private InitialWordObserver initialWordObserver;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View result = super.onCreateView(inflater, container, savedInstanceState);
-        setRetainInstance(true);
-        return result;
+        return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     @Override
@@ -52,25 +57,56 @@ public class GameFragment extends MainActivityFragment {
         tree = new FilePrefixTree(file.getAbsolutePath());
         gameSolver = new GameSolver(tree);
         userWords = new HashSet<>();
-        cellBoardView.setOnWordEnteredListener(new WordListener());
 
-        if (!cellBoardView.hasInitialWord()) {
+        if (!gameBoardView.hasInitialWord()) {
             initialWordObserver = new InitialWordObserver();
             tree.getRandomFiveLetterWord()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(initialWordObserver);
         }
+
+        Observable<String> selectedWordObservable = gameBoardView.getSelectedWordObservable()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .share();
+
+        selectedWordObservable.subscribe(sendButton);
+        selectedWordObservable.subscribe(eraseButton);
     }
 
     @Override
     public void onPause() {
+
         if (initialWordObserver != null) {
             initialWordObserver.dispose();
             initialWordObserver = null;
         }
         tree.close();
         super.onPause();
+    }
+
+    @OnClick(R.id.sendButton)
+    public void addWord() {
+        final String word = gameBoardView.getWord();
+        String newWord = word.toLowerCase();
+        if (tree.containsWord(newWord)) {
+            userWords.add(newWord);
+            gameBoardView.addHumanWord();
+            final char[][] board = gameBoardView.getBoard();
+            gameSolver.getSolutions(board)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new GameDecisionSubscriber());
+        } else {
+            String message = getString(R.string.word_does_not_exist, word);
+            showError(message);
+        }
+    }
+
+    @OnClick(R.id.eraseButton)
+    public void cancelWord() {
+        gameBoardView.cancelWord();
     }
 
     private class InitialWordObserver extends DisposableObserver<String> {
@@ -87,29 +123,7 @@ public class GameFragment extends MainActivityFragment {
         @Override
         public void onNext(String word) {
             userWords.add(word);
-            cellBoardView.setInitialWord(word.toUpperCase());
-        }
-
-    }
-
-    private class WordListener implements com.github.ruslanjava.baldagame.cellBoard.OnWordEnteredListener {
-
-        @Override
-        public void onWordEntered(String word) {
-            String newWord = word.toLowerCase();
-            if (tree.containsWord(newWord)) {
-                userWords.add(newWord);
-                cellBoardView.addWord();
-                final char[][] board = cellBoardView.getBoard();
-                gameSolver.getSolutions(board)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new GameDecisionSubscriber());
-            } else {
-                cellBoardView.cancelWord();
-                String message = getString(R.string.word_does_not_exist, word);
-                showError(message);
-            }
+            gameBoardView.setInitialWord(word.toUpperCase());
         }
 
     }
@@ -142,7 +156,7 @@ public class GameFragment extends MainActivityFragment {
             int x = gameSolution.getNewLetterX();
             int y = gameSolution.getNewLetterY();
             char letter = gameSolution.getNewLetter();
-            cellBoardView.addComputerMove(x, y, letter, gameSolution.getPath());
+            gameBoardView.addComputerMove(x, y, letter, gameSolution.getPath());
 
             Observable.empty().delay(2, TimeUnit.SECONDS)
                     .subscribeOn(Schedulers.io())
@@ -156,7 +170,7 @@ public class GameFragment extends MainActivityFragment {
 
         @Override
         public void onComplete() {
-            cellBoardView.addWord();
+            gameBoardView.addComputerWord();
         }
 
         @Override

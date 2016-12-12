@@ -1,4 +1,4 @@
-package com.github.ruslanjava.baldagame.cellBoard.arrows;
+package com.github.ruslanjava.baldagame.game.gameBoard.arrows;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -9,7 +9,7 @@ import android.widget.FrameLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.github.ruslanjava.baldagame.cellBoard.Cell;
+import com.github.ruslanjava.baldagame.game.gameBoard.Cell;
 
 public class ArrowsView extends FrameLayout {
 

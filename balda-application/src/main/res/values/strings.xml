@@ -5,4 +5,6 @@
     <string name="cancel">отмена</string>
     <string name="word_does_not_exist" formatted="false">Слова \"%s\" не существует</string>
     <string name="move_does_not_exist">Хода не существует</string>
+    <string name="send">Отправить</string>
+    <string name="clear">Стереть</string>
 </resources>
