@@ -64,7 +64,7 @@ public class ParagraphReader implements AutoCloseable {
         String markers = value.substring(0, capitalLetterIndex);
         // текст между словом и его значением должен содержать род существительного:
         // "АБАЖУР,  -а,  м.
-        if (!markers.contains(" м.") && !markers.contains(" ж.") && !markers.contains(" ср.")) {
+        if (!markers.contains("м.") && !markers.contains("ж.") && !markers.contains("ср.")) {
             return null;
         }
 
