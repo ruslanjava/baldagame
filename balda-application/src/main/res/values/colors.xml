@@ -16,6 +16,8 @@
     <color name="selectedCellBackgroundTop">#999999</color>
     <color name="selectedCellBackgroundBottom">#222222</color>
 
+    <color name="pointsTextTop">#FFAA33</color>
+    <color name="pointsTextBottom">#000000</color>
     <color name="normalCellTextTop">#555555</color>
     <color name="normalCellTextBottom">#222222</color>
     <color name="newCellTextTop">#F6A9Cb</color>

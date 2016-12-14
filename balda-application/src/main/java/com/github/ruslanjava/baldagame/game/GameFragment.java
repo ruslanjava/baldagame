@@ -34,16 +34,32 @@ public class GameFragment extends MainActivityFragment {
     @BindView(R.id.sendButton)
     SendButton sendButton;
 
+    @BindView(R.id.computerPointsView)
+    PointsView computerPointsView;
+
+    @BindView(R.id.yourPointsView)
+    PointsView yourPointsView;
+
+    @BindView(R.id.computerWordsListView)
+    WordsListView computerWordsListView;
+
+    @BindView(R.id.yourWordsListView)
+    WordsListView yourWordsListView;
+
     @BindView(R.id.eraseButton)
     EraseButton eraseButton;
 
     @State
-    HashSet<String> userWords;
+    HashSet<String> usedWords;
 
     private FilePrefixTree tree;
     private GameSolver gameSolver;
 
     private InitialWordObserver initialWordObserver;
+
+    public GameFragment() {
+        usedWords = new HashSet<>();
+    }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -53,10 +69,10 @@ public class GameFragment extends MainActivityFragment {
     @Override
     public void onResume() {
         super.onResume();
+
         File file = new File(getActivity().getFilesDir(), "dictionary.rdict");
         tree = new FilePrefixTree(file.getAbsolutePath());
         gameSolver = new GameSolver(tree);
-        userWords = new HashSet<>();
 
         if (!gameBoardView.hasInitialWord()) {
             initialWordObserver = new InitialWordObserver();
@@ -70,14 +86,15 @@ public class GameFragment extends MainActivityFragment {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .share();
-
         selectedWordObservable.subscribe(sendButton);
         selectedWordObservable.subscribe(eraseButton);
+
+        yourPointsView.observe(yourWordsListView.getPointsObservable());
+        computerPointsView.observe(computerWordsListView.getPointsObservable());
     }
 
     @Override
     public void onPause() {
-
         if (initialWordObserver != null) {
             initialWordObserver.dispose();
             initialWordObserver = null;
@@ -91,7 +108,8 @@ public class GameFragment extends MainActivityFragment {
         final String word = gameBoardView.getWord();
         String newWord = word.toLowerCase();
         if (tree.containsWord(newWord)) {
-            userWords.add(newWord);
+            usedWords.add(word);
+            yourWordsListView.add(word);
             gameBoardView.addHumanWord();
             final char[][] board = gameBoardView.getBoard();
             gameSolver.getSolutions(board)
@@ -122,7 +140,7 @@ public class GameFragment extends MainActivityFragment {
 
         @Override
         public void onNext(String word) {
-            userWords.add(word);
+            usedWords.add(word);
             gameBoardView.setInitialWord(word.toUpperCase());
         }
 
@@ -146,12 +164,16 @@ public class GameFragment extends MainActivityFragment {
             if (solved) {
                 return;
             }
-            if (userWords.contains(gameSolution.getWord())) {
+
+            String computerWord = gameSolution.getWord();
+            if (usedWords.contains(computerWord)) {
                 return;
             }
 
             solved = true;
-            userWords.add(gameSolution.getWord());
+
+            usedWords.add(computerWord);
+            computerWordsListView.add(computerWord.toUpperCase());
 
             int x = gameSolution.getNewLetterX();
             int y = gameSolution.getNewLetterY();

@@ -12,20 +12,12 @@ public class EraseButton extends Button implements Observer<String> {
 
     private Disposable disposable;
 
-    public EraseButton(Context context) {
-        super(context);
-    }
-
     public EraseButton(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
     public EraseButton(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-    }
-
-    public EraseButton(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
     }
 
     @Override
@@ -57,6 +49,5 @@ public class EraseButton extends Button implements Observer<String> {
     @Override
     public void onComplete() {
     }
-
 
 }
